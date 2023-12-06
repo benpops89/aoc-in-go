@@ -10,12 +10,12 @@ import (
 )
 
 func main() {
-	data, err := os.Open("input")
+	f, err := os.Open("input")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer data.Close()
+	defer f.Close()
 
 	// Create a map from name to number
 	number_map := make(map[string]string)
@@ -30,7 +30,7 @@ func main() {
 	number_map["nine"] = "9"
 
 	sum := 0
-	scanner := bufio.NewScanner(data)
+	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		re_first := regexp.MustCompile(`one|two|three|four|five|six|seven|eight|nine|[1-9]`)
 		first_number := re_first.FindString(scanner.Text())

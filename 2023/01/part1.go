@@ -10,15 +10,15 @@ import (
 )
 
 func main() {
-	data, err := os.Open("input")
+	f, err := os.Open("input")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer data.Close()
+	defer f.Close()
 
 	sum := 0
-	scanner := bufio.NewScanner(data)
+	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		re := regexp.MustCompile(`\d`)
 		numbers := re.FindAllString(scanner.Text(), -1)
