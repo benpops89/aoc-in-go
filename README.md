@@ -8,9 +8,11 @@ This repository contains solutions to Advent of Code puzzles implemented in the 
   - **`01/`**: Contains the solution for Day 1 of Advent of Code in the year 2023.
     - `part1.go`: Go source code for solving part 1 of the puzzle.
     - `part2.go`: Go source code for solving part 2 of the puzzle.
-    - `input.txt`: The input required to solve the puzzle. Note this is specific to me
+    - `input`: The input required to solve the puzzle. Note this is specific to me
+    - `sample`: The example input given in the question
   - **`02/`**: Contains the solution for Day 1 of Advent of Code in the year 2023.
     - `part1.go`: Go source code for solving part 1 of the puzzle.
     - `part2.go`: Go source code for solving part 2 of the puzzle.
-    - `input.txt`: The input required to solve the puzzle. Note this is specific to me
+    - `input`: The input required to solve the puzzle. Note this is specific to me
+    - `sample`: The example input given in the question
   - *(...and so on)*
