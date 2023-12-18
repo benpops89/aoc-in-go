@@ -55,17 +55,19 @@ func main() {
 		}
 	}
 
-	seed_map := make(map[SeedRange]SeedRange)
+	seed_map := make(map[SeedRange][]SeedRange)
 
 	for _, seed := range seeds {
-		seed_map[seed] = seed
+		seed_map[seed] = append(seed_map[seed], seed)
 		for _, ranges := range maps {
-			current := seed_map[seed]
-			for _, r := range ranges {
-				if current.start >= r.src && current.start < r.src+r.rng {
-					start := r.dst + current.start - r.src
-					seed_map[seed] = SeedRange{start, start}
-					break
+			for _, seed_range := range seed_map[seed] {
+				// current := seed_map[seed]
+				for _, r := range ranges {
+					if seed_range.start >= r.src && seed_range.start < r.src+r.rng {
+						start := r.dst + seed_range.start - r.src
+						seed_map[seed][0] = SeedRange{start, start}
+						break
+					}
 				}
 			}
 		}
@@ -73,7 +75,9 @@ func main() {
 
 	p1 := math.MaxInt
 	for _, s := range seed_map {
-		p1 = min(p1, s.start)
+		for _, sr := range s {
+			p1 = min(p1, sr.start)
+		}
 	}
 
 	// seed_source := make(map[SeedRange]SeedRange)
@@ -97,6 +101,6 @@ func main() {
 	// }
 	//
 	// fmt.Println(seed_source)
-	fmt.Println(seed_map)
+	// fmt.Println(seed_map)
 	fmt.Println(p1)
 }
