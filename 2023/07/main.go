@@ -34,8 +34,21 @@ func main() {
 		i--
 	}
 
+	p1 := SortHands(data, strength, false)
+	p2 := SortHands(data, strength, true)
+
+	fmt.Println(p1)
+	fmt.Println(p2)
+
+}
+
+func SortHands(s []string, strength map[string]int, j bool) int {
+	if j {
+		strength["J"] = 1
+	}
+
 	var hands []Hand
-	for _, line := range data {
+	for _, line := range s {
 		var cards []Card
 		s := strings.Split(line, " ")
 		counts := make(map[string]int)
@@ -55,7 +68,7 @@ func main() {
 			}
 		}
 		bid, _ := strconv.Atoi(s[1])
-		score := CalculateScore(counts)
+		score := CalculateScore(counts, j)
 		hand := Hand{cards, counts, score, bid}
 		hands = append(hands, hand)
 	}
@@ -79,19 +92,28 @@ func main() {
 		}
 		return false
 	})
-	p1 := 0
+	total := 0
 	rank := len(hands)
 	for _, hand := range hands {
-		p1 += rank * hand.bid
+		total += rank * hand.bid
 		rank--
 	}
 
-	fmt.Println(p1)
-
+	return total
 }
 
-func CalculateScore(c map[string]int) []int {
+func CalculateScore(c map[string]int, j bool) []int {
 	var scores []int
+
+	var joker int
+	var ok bool
+	if j {
+		joker, ok = c["J"]
+		if ok {
+			delete(c, "J")
+		}
+	}
+
 	for _, value := range c {
 		scores = append(scores, value)
 	}
@@ -99,8 +121,10 @@ func CalculateScore(c map[string]int) []int {
 
 	length := len(scores)
 	if length == 1 {
-		return []int{scores[0], scores[0]}
+		return []int{scores[0] + joker, scores[0] + joker}
+	} else if len(scores) == 0 {
+		return []int{5, 5}
 	}
 
-	return []int{scores[length-2], scores[length-1]}
+	return []int{scores[length-2], scores[length-1] + joker}
 }
